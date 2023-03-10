@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录页面</title>
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/static/bootstrap/icons/bootstrap-icons.css" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        body {
+            background: skyblue;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            padding-left: 11px;
+        }
+
+
+        #loginError {
+            color: red;
+            font-size: 20px;
+        }
+
+        .content {
+            display: flex;
+            height: 80vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .wrapper {
+            padding: 15px 30px;
+            background: #F7F7F7;
+        }
+
+        .title_info {
+            font-size: 19px;
+            color: #478fca;
+            border-bottom-color: #d5e3ef;
+            line-height: 28px;
+            margin-bottom: 16px;
+            margin-top: 18px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #CCC;
+        }
+
+
+        .login_form {
+            width: 300px;
+        }
+
+        .form_item {
+            margin-top: 8px;
+        }
+
+        .form_input {
+            outline: none;
+            border-radius: 0;
+            border: 1px solid #d5d5d5;
+            font-size: 14px;
+            font-family: inherit;
+            width: 100%;
+            height: 34px;
+            color: #858585;
+            padding: 0 10px;
+        }
+
+        .form_input:hover {
+
+            border-color: #b5b5b5;
+        }
+
+        .form_input:focus {
+            border-color: #f59942;
+        }
+
+        .login_oprator {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            border-radius: 0;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .btn-primary {
+            background-color: #428bca !important;
+            border-color: #428bca;
+        }
+
+        .login_oprator {
+            margin-top: 20px;
+        }
+
+        .thread_wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+            padding-top: 20px;
+            border-top: 1px solid #CCC;
+        }
+
+        .three_login {
+            width: 200px;
+            display: flex;
+            justify-content: space-between;
+            padding-left: 0px;
+        }
+
+        .three_login li img {
+            width: 40px;
+        }
+
+        .three_img:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+<div class="content">
+    <div class="wrapper">
+        <div class="title_info">
+            <img style="width: 30px;" src="/static/images/icon-1.png" alt="">
+            <span>请填写登录信息</span>
+        </div>
+        <h2 id="loginError" th:if="${session.SPRING_SECURITY_LAST_EXCEPTION}"
+            th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}">
+            用户名或密码错误</h2>
+        <form action="/login" method="post" class="login_form">
+            <div class="form_item">
+                <input autocomplete="off" id="username" name="username" placeholder="用户名" class="form_input"
+                       type="text">
+                <span class="error" id="usernameError"></span>
+            </div>
+            <div class="form_item">
+                <input autocomplete="off" id="password" name="password" placeholder="密码" class="form_input"
+                       type="password">
+                <span class="error" id="passwordError"></span>
+            </div>
+            <div class="form_item login_oprator">
+                <div>
+                    <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" value="true"><label
+                        for="rememberMe">记住我</label>
+                </div>
+                <button class="btn btn-primary" type="submit">登录</button>
+            </div>
+        </form>
+        <div class="thread_wrapper">
+            <ul class="three_login">
+                <li>
+                    <img class="three_img" data="qq" src="/static/images/bd-acc-qzone.png" alt="">
+                </li>
+                <li>
+                    <img class="three_img" data="weibo" src="/static/images/bd-acc-tsina.png" alt="">
+
+                </li>
+                <li>
+                    <img class="three_img" data="weixin" src="/static/images/bd-acc-weixin.png" alt="">
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+
+        function doSubmitForm(e) {
+            let username = document.getElementById("username").value
+            let password = document.getElementById("password").value
+            console.log('username', username)
+            console.log('password', password)
+
+            let errorFlag = 0
+
+            if (username.trim().length == 0) {
+                errorFlag += 1
+                document.getElementById("usernameError").innerText = '用户名为空'
+            } else {
+                document.getElementById("usernameError").innerText = ''
+
+            }
+
+            if (password.trim().length == 0) {
+                errorFlag += 1
+                document.getElementById("passwordError").innerText = '密码为空'
+            } else {
+                document.getElementById("passwordError").innerText = ''
+
+            }
+
+            // has error
+            if (errorFlag > 0) {
+                return false;
+            }
+
+            return true;
+        }
+
+        window.onload = function () {
+            let images = document.getElementsByClassName("three_img");
+            for (let i = 0; i < images.length; i++) {
+                images[i].onclick = function (e) {
+                    let login_type = e.target.getAttribute("data");
+
+                    switch (login_type) {
+                        case 'qq':
+                            window.open('http://mxzero.top?type=qq')
+                            break
+                        case 'weibo':
+                            window.open('http://mxzero.top?type=weibo')
+                            break
+                        case 'weixin':
+                            window.open('http://mxzero.top?type=weixin')
+                            break
+                    }
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>

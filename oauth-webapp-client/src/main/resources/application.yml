@@ -1,0 +1,29 @@
+server:
+  port: 8100
+
+spring:
+  application:
+    name: webapp-client
+  security:
+    oauth2:
+      client:
+        registration:
+          webapp-client:
+            provider: webapp-client
+            client-id: webapp-client
+            client-secret: hello
+            authorization-grant-type: authorization_code
+            clientAuthenticationMethod: client_secret_post
+            redirect-uri: http://webapp.mxzero.top:8100/login/oauth2/code/webapp-client-oidc
+            scope: webapp
+            client-name: webapp-client
+        provider:
+          webapp-client:
+            authorization-uri: http://sso.mxzero.top:9000/oauth2/authorize
+            token-uri: http://sso.mxzero.top:9000/oauth2/token
+            user-info-uri: http://sso.mxzero.top:9000/me
+            jwk-set-uri: http://sso.mxzero.top:9000/oauth2/jwks
+            userNameAttribute: username
+      resourceserver:
+        jwt:
+          issuer-uri: http://sso.mxzero.top:9000

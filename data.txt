@@ -1,0 +1,6 @@
+http://sso.mxzero.top:9000/oauth2/authorize?client_id=webapp-client&response_type=code&scope=webapp&redirect_uri=http://webapp.mxzero.top:8100/authorized
+
+http://message.mxzero.top:9000/oauth2/authorize?client_id=message-client&response_type=code&scope=message.write message.read&redirect_uri=http://message.mxzero.top:8200/authorized
+
+http://sso.mxzero.top:9000/oauth2/authorize?client_id=dept-client&response_type=code&scope=dept&redirect_uri=http://dept.mxzero.top:8300/authorized
+

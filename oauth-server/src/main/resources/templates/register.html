@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用户注册</title>
+  <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+        #get_code_btn {
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+      <form action="/register" method="post">
+        <div class="mb-3 mt-3">
+          <h4 class="error" th:text="${error}"></h4>
+        </div>
+        <div class="mb-3 mt-3">
+          <label for="username" class="form-label">用户名:</label>
+          <input maxlength="12" autocomplete="off" type="username" class="form-control" id="username"
+                 required placeholder="用户名" name="username">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">密码:</label>
+          <input maxlength="18" autocomplete="off" type="password" class="form-control" id="password"
+                 required placeholder="密码" name="password">
+        </div>
+
+        <div class="mb-3 mt-3">
+          <label for="email" class="form-label">邮箱:</label>
+          <input maxlength="64" autocomplete="off" type="email" class="form-control" id="email" required
+                 placeholder="邮箱" name="email">
+        </div>
+        <div class="mb-3 mt-3">
+          <label for="code" class="form-label">验证码:</label>
+          <div class="input-group">
+            <input autocomplete="off" maxlength="6" type="text" class="form-control" id="code" required
+                   placeholder="验证码" name="code">
+            <button type="button" id="get_code_btn" class="input-group-text">获取验证码</span>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">注册</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+        let is_clink_get_code = false
+        document.getElementById("get_code_btn").onclick = function () {
+            if (is_clink_get_code) {
+                return
+            }
+            is_clink_get_code = true
+
+            let currentSecords = 10
+            let getCodeElement = document.getElementById('get_code_btn')
+            getCodeElement.style.cursor = 'not-allowed'
+            getCodeElement.innerHTML = '正在发送...'
+            setTimeout(() => {
+                getCodeElement.innerText = currentSecords + '秒后重新获取'
+                let inter = setInterval(() => {
+                    getCodeElement.innerText = (--currentSecords) + '秒后重新获取'
+                    console.log("inter")
+                    if (currentSecords == 0) {
+                        clearInterval(inter)
+                        is_clink_get_code = false
+                        getCodeElement.innerHTML = '获取验证码'
+                        getCodeElement.style.cursor = 'pointer'
+                    }
+                }, 1000);
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>

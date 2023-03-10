@@ -1,0 +1,27 @@
+server:
+  port: 8500
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          message-resource-client:
+            provider: resource-client
+            client-id: resource-client
+            client-secret: hello
+            authorization-grant-type: authorization_code
+            clientAuthenticationMethod: client_secret_post
+            redirect-uri: http://resource.mxzero.top:8500/login/oauth2/code/resource-client-oidc
+            scope: resource
+            client-name: resource-client
+        provider:
+          resource-client:
+            authorization-uri: http://sso.mxzero.top:9000/oauth2/authorize
+            token-uri: http://sso.mxzero.top:9000/oauth2/token
+            user-info-uri : http://sso.mxzero.top:9000/me
+            jwk-set-uri: http://sso.mxzero.top:9000/oauth2/jwks
+            userNameAttribute: username
+      resourceserver:
+        jwt:
+          issuer-uri: http://sso.mxzero.top:9000

@@ -1,0 +1,22 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: sso.mxzero.top
+  mvc:
+    static-path-pattern: /static/**
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8:00
+  datasource:
+    url: jdbc:mysql://localhost:3306/oauth2
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: mysqladmin
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://sso.mxzero.top:9000/user/info
+
